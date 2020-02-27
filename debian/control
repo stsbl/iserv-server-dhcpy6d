@@ -10,8 +10,13 @@ Package: stsbl-iserv-server-dhcpy6d
 Architecture: all
 Depends: ${misc:Depends},
   ${perl:Depends},
+  dhcpy6d (>= 0.7.99-9),
+  iserv-config-file,
   iserv-update,
+  liblist-moreutils-perl,
   stsbl-iserv-config-ipv6,
+Breaks: stsbl-iserv-ipv6-support (<< 20.02.27-2),
+Replaces: stsbl-iserv-ipv6-support (<< 20.02.27-2),
 Description: IServ dhcpy6d-Server
  Konfiguriert den DHCPv6-Server dhcpy6d.
 Tag: suite::iserv

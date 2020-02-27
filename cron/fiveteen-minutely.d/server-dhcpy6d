@@ -1,0 +1,7 @@
+#!/bin/sh
+
+# Check volatile dhcpy6d every 10 minutes to detect duplicated instances early
+iservchk -a dhcpy6d
+
+exit 0
+

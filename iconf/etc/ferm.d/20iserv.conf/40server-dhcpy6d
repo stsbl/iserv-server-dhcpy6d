@@ -1,0 +1,8 @@
+domain (ip6) {
+  table filter {
+    chain input_linklocal {
+      proto udp dport 547 jump input_dhcpv6_server;
+    }
+  }
+}
+
