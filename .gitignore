@@ -1,0 +1,6 @@
+debian/stsbl-iserv-server-dhcpy6d/*
+debian/stsbl-iserv-server-dhcpy6d.substvars
+debian/stsbl-iserv-server-dhcpy6d.debhelper.log
+debian/files
+debian/debhelper-build-stamp
+debian/*.debhelper
