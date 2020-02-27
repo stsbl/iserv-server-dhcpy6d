@@ -7,7 +7,7 @@ then
   echo 'Test "generate duid"'
   echo '  [ -s "/var/lib/iserv/server-dhcpy6d/duid" ]'
   echo '  ---'
-  echo '  dhcpy6d --generate-duid > /var/lib/iserv/dhcpy6d/duid'
+  echo '  dhcpy6d --generate-duid > /var/lib/iserv/server-dhcpy6d/duid'
   echo
   echo '# There seems to be multiple instances of dhcpy6d sometimes leading to'
   echo '# log spam (see https://github.com/HenriWahl/dhcpy6d/issues/20)'
