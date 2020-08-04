@@ -1,3 +1,11 @@
+stsbl-iserv-server-dhcpy6d (20.08.04-1) stable; urgency=medium
+
+  * Fixed IConf template
+  * Updated license copyright
+  * Fixed DHCP variable logic the 500th time
+
+ -- Felix Jacobi <Felix@jacobi-hamburg.net>  Tue, 04 Aug 2020 23:29:31 +0200
+
 stsbl-iserv-server-dhcpy6d (20.08.02-1) testing; urgency=medium
 
   * Fixed determining deactivated DHCP server on portal
