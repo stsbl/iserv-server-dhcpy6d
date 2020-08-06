@@ -2,7 +2,7 @@
 
 . /usr/lib/iserv/cfg
 
-if ! [ -v "DHCP" ] || { [[ ${#DHCP} -gt 0 ]] && netquery6 -gulq; }
+if ! dpkg-query -Wf '${Status}' iserv-portal 2>/dev/null | grep -qE '^(install|hold) ok (unpacked|installed)$' || { [[ ${#DHCP} -gt 0 ]] && netquery6 -gulq; }
 then
   echo 'Test "generate duid"'
   echo '  [ -s "/var/lib/iserv/server-dhcpy6d/duid" ]'
