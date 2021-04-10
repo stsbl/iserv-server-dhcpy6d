@@ -2,11 +2,11 @@ Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: stsbl-iserv-server-dhcpy6d
 
 Files: *
-Copyright: 2020 Felix Jacobi <Felix@jacobi-hamburg.net>
+Copyright: 2021 Felix Jacobi <Felix@jacobi-hamburg.net>
 License: MIT
 
 Files: debian/*
-Copyright: 2020 Stadtteilschule Blankenese <repository@stsbl.de>
+Copyright: 2021 Stadtteilschule Blankenese <repository@stsbl.de>
 License: MIT
 
 License: MIT
