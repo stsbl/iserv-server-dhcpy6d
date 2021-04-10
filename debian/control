@@ -2,21 +2,20 @@ Source: stsbl-iserv-server-dhcpy6d
 Section: misc
 Priority: optional
 Maintainer: Stadtteilschule Blankenese <repository@stsbl.de>
-Build-Depends: debhelper (>= 10)
-Build-Depends-Indep: iserv-buildtools
+Build-Depends: debhelper-compat (= 13), dh-sequence-iserv, dh-sequence-stsbl
 Standards-Version: 4.5.0
 
 Package: stsbl-iserv-server-dhcpy6d
 Architecture: all
-Depends: ${misc:Depends},
-  ${perl:Depends},
-  dhcpy6d (>= 0.7.99-9),
-  iserv-config-file,
-  iserv-update,
-  liblist-moreutils-perl,
-  stsbl-iserv-config-ipv6,
-Breaks: stsbl-iserv-ipv6-support (<< 20.02.27-2),
-Replaces: stsbl-iserv-ipv6-support (<< 20.02.27-2),
+Depends: dhcpy6d (>= 0.7.99-9),
+         iserv-config-file,
+         iserv-update,
+         liblist-moreutils-perl,
+         stsbl-iserv-config-ipv6,
+         ${misc:Depends},
+         ${perl:Depends}
+Breaks: stsbl-iserv-ipv6-support (<< 20.02.27-2)
+Replaces: stsbl-iserv-ipv6-support (<< 20.02.27-2)
 Description: IServ dhcpy6d-Server
  Konfiguriert den DHCPv6-Server dhcpy6d.
 Tag: suite::iserv
