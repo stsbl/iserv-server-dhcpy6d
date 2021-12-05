@@ -4,25 +4,32 @@
 
 if ! dpkg-query -Wf '${Status}' iserv-portal 2>/dev/null | grep -qE '^(install|hold) ok (unpacked|installed)$' || { [[ ${#DHCP} -gt 0 ]] && netquery6 -gulq; }
 then
-  echo 'Test "generate duid"'
-  echo '  [ -s "/var/lib/iserv/server-dhcpy6d/duid" ]'
-  echo '  ---'
-  echo '  dhcpy6d --generate-duid > /var/lib/iserv/server-dhcpy6d/duid'
-  echo
-  echo '# There seems to be multiple instances of dhcpy6d sometimes leading to'
-  echo '# log spam (see https://github.com/HenriWahl/dhcpy6d/issues/20)'
-  echo 'Test "single instance running"'
-  echo '  [ "$(pgrep -c dhcpy6d)" -lt 2 ]'
-  echo '  ---'
-  echo '  service stop dhcpy6d'
-  echo
-  echo 'Check /etc/default/dhcpy6d'
-  echo 'Check /etc/dhcpy6d.conf'
-  echo 'Start dhcpy6d dhcpy6d'
+cat <<EOT
+# See https://github.com/HenriWahl/dhcpy6d/issues/49
+Test "restart once to fix volatile.sqlite log spam"
+  grep -qx 20server-dhcpy6d_restart /var/lib/iserv/config/update.log
+  ---
+  systemctl try-restart dhcpy6d &&
+      echo 20server-dhcpy6d_restart >> /var/lib/iserv/config/update.log
+
+Test "generate duid"
+  [ -s "/var/lib/iserv/server-dhcpy6d/duid" ]
+  ---
+  dhcpy6d --generate-duid > /var/lib/iserv/server-dhcpy6d/duid
+
+Check /etc/default/dhcpy6d
+Check /etc/dhcpy6d.conf
+
+Start dhcpy6d dhcpy6d
+
+EOT
 else
-  echo 'Remove /etc/dhcpy6d.conf'
-  echo
-  echo 'Stop dhcpy6d dhcpy6d'
+  cat <<EOT
+Remove /etc/dhcpy6d.conf
+
+Stop dhcpy6d dhcpy6d
+
+EOT
 fi
 echo
 
