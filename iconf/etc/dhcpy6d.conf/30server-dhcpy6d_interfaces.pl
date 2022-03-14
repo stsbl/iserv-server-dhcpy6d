@@ -75,8 +75,8 @@ for my $nic (uniq sort split /\n/, qx(netquery6 -gul "nic"))
   print "interface = $nic\n";
   print "ntp_server = $ips\n";
   print "advertise = addresses prefixes\n";
-  print 'call_up = sudo /usr/sbin/dhcpy6d-add-route $prefix$/$length$ $router$ mgmt' . "\n";
-  print 'call_down = sudo /usr/sbin/dhcpy6d-del-route $prefix$/$length$ $router$ mgmt' . "\n";
+  print 'call_up = sudo /usr/sbin/dhcpy6d-add-route $prefix$/$length$ $router$ ' . "$nic\n";
+  print 'call_down = sudo /usr/sbin/dhcpy6d-del-route $prefix$/$length$ $router$ ' . "$nic\n";
   print "filter_mac = .*\n";
   print "\n";
   print $addresses;
