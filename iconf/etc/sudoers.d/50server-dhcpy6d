@@ -1,0 +1,3 @@
+dhcpy6d        ALL = (root) NOPASSWD: /usr/sbin/dhcpy6d-add-route
+dhcpy6d        ALL = (root) NOPASSWD: /usr/sbin/dhcpy6d-del-route
+

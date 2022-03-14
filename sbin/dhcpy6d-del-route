@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+
+NAME="$(basename "$0")"
+
+if [ -z "$1" ] || [ -z "$2" ] || [ -z "$3" ]
+then
+  echo "Usage: $NAME PREFIX GATEWAY IFACE" >&2
+  exit 1
+fi
+
+{ printf "%s called with " "$NAME:"
+  printf " \"%s\"" "$@"
+  printf "\n"
+} | logger -t "$NAME" --socket-errors=off
+
+ip -6 route del "$1" via "$2" dev "$3"

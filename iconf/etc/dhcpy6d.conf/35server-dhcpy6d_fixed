@@ -1,3 +1,7 @@
 [address_fixed]
 category = fixed
 
+[address_fixed_ta]
+category = fixed
+ia_type = ta
+
