@@ -1,3 +1,10 @@
+stsbl-iserv-server-dhcpy6d (22.03.15.1) stable; urgency=medium
+
+  * Without there are ot matched for reasons...
+  * Fixed iconf template name
+
+ -- Felix Jacobi <Felix@jacobi-hamburg.net>  Tue, 15 Mar 2022 02:39:10 +0100
+
 stsbl-iserv-server-dhcpy6d (22.03.14.3) stable; urgency=medium
 
   * Fixed nic when calling route hook
