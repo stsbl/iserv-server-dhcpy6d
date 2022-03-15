@@ -69,6 +69,8 @@ for my $nic (uniq sort split /\n/, qx(netquery6 -gul "nic"))
   print "[class_default_$nic]\n";
   print "addresses = " . join(" ", sort @address_pools) . "\n";
   print "ntp_server = $ips\n";
+  print "interface = $nic\n";
+  print "filter_mac = .*\n";
   print "\n";
   print "[class_fixed_$nic]\n";
   print "addresses = fixed fixed_ta\n";
