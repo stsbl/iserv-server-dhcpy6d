@@ -34,8 +34,16 @@ print {$sla} "56\n"; close $sla;
 open my $in, '<', $generator or die $!;
 my $script = do { local $/; <$in> };
 $script =~ s/use IServ::Conf;/our \$conf = { DHCP => ['br1118'] };/;
+open my $helper, '>', "$bin/iserv-ipv6-prefix" or die $!;
+print {$helper} <<'SH';
+#!/bin/sh
+[ "$1" = --placeholder ] && { case "$2" in fd*) echo "$2";; *::) echo '$prefix$18::';; *) echo '$prefix$18::1';; esac; }
+SH
+close $helper;
+chmod 0755, "$bin/iserv-ipv6-prefix";
 my $run = "$tmp/generator.pl";
 open my $out, '>', $run or die $!;
+$script =~ s!/usr/lib/iserv/iserv-ipv6-prefix!$bin/iserv-ipv6-prefix!g;
 print {$out} $script; close $out; chmod 0755, $run;
 my $result = `PATH=$bin:$ENV{PATH} ISERV_IPV6_DHCP_CONFIG_DIR=$tmp/config ISERV_IPV6_DHCPCD_STATE_DIR=$tmp/state $run`;
 is($? >> 8, 0, 'generator exits successfully');
