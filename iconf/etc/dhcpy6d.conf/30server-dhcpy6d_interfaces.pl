@@ -4,12 +4,48 @@ use warnings;
 use strict;
 use IServ::Conf;
 use List::MoreUtils qw(uniq);
+use Socket qw(AF_INET6 inet_pton);
 
 my %activate_dhcp = ("*", 1);
 
 if (exists $conf->{DHCP})
 {
   %activate_dhcp = map { $_ => 1 } @{ $conf->{DHCP} };
+}
+
+my $config_dir = $ENV{ISERV_IPV6_DHCP_CONFIG_DIR} // '/var/lib/iserv/config';
+my $state_dir = $ENV{ISERV_IPV6_DHCPCD_STATE_DIR} // '/var/lib/iserv/config-ipv6/dhcpcd';
+my %delegation = map { chomp; $_ => 1 } grep { /\S/ } do {
+  my $file = "$config_dir/ipv6-delegation-interfaces.list";
+  -f $file ? do { open my $fh, '<', $file or die "$file: $!"; <$fh> } : ();
+};
+my ($upstream) = do {
+  my $file = "$config_dir/ipv6-dhcp-interfaces.list";
+  -f $file ? do { open my $fh, '<', $file or die "$file: $!"; grep { /\S/ } <$fh> } : ();
+};
+chomp $upstream if defined $upstream;
+my $sla_len = 62;
+if (defined $upstream && -f "$state_dir/$upstream.sla-len") {
+  open my $fh, '<', "$state_dir/$upstream.sla-len" or die "$state_dir/$upstream.sla-len: $!";
+  $sla_len = <$fh>; chomp $sla_len;
+}
+
+sub prefix_placeholder {
+  my ($address) = @_;
+  return $address unless defined $upstream && $sla_len =~ /^\d+$/ && $sla_len % 4 == 0;
+  return $address if $address =~ /^f[cd]/i; # ULA stays stable.
+  my $packed = inet_pton(AF_INET6, $address) or return $address;
+  my $hex = unpack('H*', $packed);
+  my $offset = $sla_len / 4;
+  my $tail = substr($hex, $offset);
+  my $first_length = 4 - ($offset % 4);
+  my $suffix = substr($tail, 0, $first_length);
+  my @groups = (substr($tail, $first_length) =~ /(.{4})/g);
+  $suffix .= ':' . join(':', @groups) if @groups;
+  $suffix =~ s/(?:^|:)0000(?::0000)*(?=:|$)/::/;
+  $suffix =~ s/(^|:)0+([0-9a-f])/$1$2/g;
+  $suffix =~ s/:::+/::/g;
+  return '$prefix$' . $suffix;
 }
 
 my %ips;
@@ -32,7 +68,7 @@ for my $nic (uniq sort split /\n/, qx(netquery6 -gul "nic"))
   for (@{ $ips{$nic} })
   {
     my @net = @{ $_ };
-    push @ips, $net[0];
+    push @ips, $delegation{$nic} ? prefix_placeholder($net[0]) : $net[0];
     $prefixes{ $net[1] } = 1;
   }
 
@@ -49,7 +85,8 @@ for my $nic (uniq sort split /\n/, qx(netquery6 -gul "nic"))
     $addresses .= "[address_$address_key]\n";
     $addresses .= "# Choosing EUI-64-based addresses.\n";
     $addresses .= "category = eui64\n";
-    $addresses .= "pattern = $prefix\$eui64\$\n";
+    my $pattern = $delegation{$nic} ? prefix_placeholder($prefix) : $prefix;
+    $addresses .= "pattern = $pattern\$eui64\$\n";
     $addresses .= "ia_type = na\n";
     $addresses .= "\n";
     push @address_pools, $address_key;
@@ -58,7 +95,7 @@ for my $nic (uniq sort split /\n/, qx(netquery6 -gul "nic"))
     $addresses .= "[address_$temp_address_key]\n";
     $addresses .= "# Choosing random addresses.\n";
     $addresses .= "category = random\n";
-    $addresses .= "pattern = $prefix\$random64\$\n";
+    $addresses .= "pattern = $pattern\$random64\$\n";
     $addresses .= "ia_type = ta\n";
     $addresses .= "\n";
     push @address_pools, $temp_address_key;

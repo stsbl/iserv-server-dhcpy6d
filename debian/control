@@ -8,7 +8,7 @@ Homepage: https://it.stsbl.de/
 
 Package: stsbl-iserv-server-dhcpy6d
 Architecture: all
-Depends: dhcpy6d (>= 0.7.99-9),
+Depends: dhcpy6d (>= 1.7.0-1.5),
          iserv-config-file,
          iserv-update,
          liblist-moreutils-perl,
