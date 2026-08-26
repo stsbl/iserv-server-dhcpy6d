@@ -12,6 +12,13 @@ if (exists $conf->{DHCP})
   %activate_dhcp = map { $_ => 1 } @{ $conf->{DHCP} };
 }
 
+sub prefix_placeholder {
+  my ($address) = @_;
+  my $placeholder = qx(/usr/lib/iserv/iserv-ipv6-prefix --placeholder $address);
+  chomp $placeholder;
+  return $placeholder || $address;
+}
+
 my %ips;
 
 for my $row (split /\n/, qx(netquery6 -gul "nic\tip\tprefix\tlength"))
@@ -32,7 +39,7 @@ for my $nic (uniq sort split /\n/, qx(netquery6 -gul "nic"))
   for (@{ $ips{$nic} })
   {
     my @net = @{ $_ };
-    push @ips, $net[0];
+    push @ips, prefix_placeholder($net[0]);
     $prefixes{ $net[1] } = 1;
   }
 
@@ -49,7 +56,8 @@ for my $nic (uniq sort split /\n/, qx(netquery6 -gul "nic"))
     $addresses .= "[address_$address_key]\n";
     $addresses .= "# Choosing EUI-64-based addresses.\n";
     $addresses .= "category = eui64\n";
-    $addresses .= "pattern = $prefix\$eui64\$\n";
+    my $pattern = prefix_placeholder($prefix);
+    $addresses .= "pattern = $pattern\$eui64\$\n";
     $addresses .= "ia_type = na\n";
     $addresses .= "\n";
     push @address_pools, $address_key;
@@ -58,7 +66,7 @@ for my $nic (uniq sort split /\n/, qx(netquery6 -gul "nic"))
     $addresses .= "[address_$temp_address_key]\n";
     $addresses .= "# Choosing random addresses.\n";
     $addresses .= "category = random\n";
-    $addresses .= "pattern = $prefix\$random64\$\n";
+    $addresses .= "pattern = $pattern\$random64\$\n";
     $addresses .= "ia_type = ta\n";
     $addresses .= "\n";
     push @address_pools, $temp_address_key;
