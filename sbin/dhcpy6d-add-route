@@ -9,8 +9,9 @@ then
   exit 1
 fi
 
-{ printf "%s called with " "$NAME:"
-  printf " \"%s\"\n" -- "$@";
+{ printf "%s called with" "$NAME:"
+  printf ' "%s"' "$@"
+  printf '\n'
 } | logger -t "$NAME" --socket-errors=off
 
-ip -6 route add "$1" via "$2" dev "$3"
+ip -6 route replace "$1" via "$2" dev "$3"
