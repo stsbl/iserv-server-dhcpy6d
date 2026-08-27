@@ -1,3 +1,18 @@
+stsbl-iserv-server-dhcpy6d (26.08.26.2) stable; urgency=medium
+
+  * Fixed Depends on dhcpy6d
+
+ -- Felix Jacobi <Felix@jacobi-hamburg.net>  Wed, 26 Aug 2026 23:29:29 +0200
+
+stsbl-iserv-server-dhcpy6d (26.08.26.1) stable; urgency=medium
+
+  * Updated .gitignore
+  * iservmake: Disabled Pootle download
+  * Feat: use dynamic prefixes in dhcpy6d server configuration
+  * Refactor: use configured prefix placeholder interface
+
+ -- Felix Jacobi <Felix@jacobi-hamburg.net>  Wed, 26 Aug 2026 23:26:51 +0200
+
 stsbl-iserv-server-dhcpy6d (23.04.17.1) stable; urgency=medium
 
   * Fixed loosing prefix delegation routes on server reboots
