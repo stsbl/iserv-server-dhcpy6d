@@ -1,3 +1,10 @@
+stsbl-iserv-server-dhcpy6d (26.08.27.1) stable; urgency=medium
+
+  * Fix DHCPv6 route hook failures
+  * Delete changelogs/unreleased/fix-route-hooks.yml
+
+ -- Felix Jacobi <Felix@jacobi-hamburg.net>  Thu, 27 Aug 2026 18:20:18 +0200
+
 stsbl-iserv-server-dhcpy6d (26.08.26.2) stable; urgency=medium
 
   * Fixed Depends on dhcpy6d
