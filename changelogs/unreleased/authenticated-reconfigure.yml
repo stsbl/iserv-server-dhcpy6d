@@ -1,5 +1,5 @@
 ---
-text: "DHCPv6-Clients können nach Präfixänderungen zur sofortigen Erneuerung ihrer Konfiguration aufgefordert werden. Die Funktion ist optional aktivierbar."
+text: "DHCPv6-Clients können nach Präfixänderungen zur sofortigen Erneuerung ihrer Konfiguration aufgefordert werden. Die Funktion ist standardmäßig aktiviert und kann deaktiviert werden."
 audience: admins
 type: added
 urgency: medium

@@ -7,12 +7,12 @@ STSBL DHCPv6 address/prefix-delegation configuration. Keep the server DUID and
 key database to another router.
 
 Install the built `dhcpy6d_1.7.0-1+stsblnmu5_all.deb` and
-`stsbl-iserv-server-dhcpy6d_26.10.28.1_all.deb` on the router with `apt install`.
+`stsbl-iserv-server-dhcpy6d_26.10.28.2_all.deb` on the router with `apt install`.
 Install `stsbl-iserv-config-ipv6_26.10.28.1_all.deb` on router and client. Resolve
 package dependencies from the normal IServ/STSBL repositories.
 
-Enable `DHCPv6Reconfigure` in the router's IServ configuration editor; its default
-is false. Run `iservchk dhcpy6d` on the router and `iservchk dhcpcd` on the client.
+`DHCPv6Reconfigure` is enabled by default in the router's IServ configuration.
+If it was explicitly disabled, enable it in the configuration editor. Run `iservchk dhcpy6d` on the router and `iservchk dhcpcd` on the client.
 Verify `/etc/dhcpy6d.conf` contains:
 
 ```
