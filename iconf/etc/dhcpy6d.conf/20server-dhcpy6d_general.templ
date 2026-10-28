@@ -5,7 +5,7 @@
 
 [dhcpy6d]
 # Interface to listen to multicast ff02::1:2.
-interface = $({ [ "$DHCP" = "*" ] && { netquery6 -gul nic | sort | uniq | tr "\n" " "; }; } || { [ -v DHCP ] && echo "${DHCP[@]}"; } || { netquery6 -gul nic | sort | uniq | tr "\n" " "; };)
+interface = $({ [ "$DHCPv6" = "*" ] && { netquery6 -gul nic | sort | uniq | tr "\n" " "; }; } || { declare -p DHCPv6 >/dev/null 2>&1 && echo "${DHCPv6[@]}"; } || { netquery6 -gul nic | sort | uniq | tr "\n" " "; };)
 # Identify and configure clients via clients.conf.
 store_config = file
 # SQLite DB for leases and LLIP-MAC-mapping.

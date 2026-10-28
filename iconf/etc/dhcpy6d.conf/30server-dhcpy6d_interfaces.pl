@@ -7,9 +7,9 @@ use List::MoreUtils qw(uniq);
 
 my %activate_dhcp = ("*", 1);
 
-if (exists $conf->{DHCP})
+if (exists $conf->{DHCPv6})
 {
-  %activate_dhcp = map { $_ => 1 } @{ $conf->{DHCP} };
+  %activate_dhcp = map { $_ => 1 } @{ $conf->{DHCPv6} };
 }
 
 sub prefix_placeholder {

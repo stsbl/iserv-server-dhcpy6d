@@ -33,7 +33,7 @@ print {$sla} "56\n"; close $sla;
 
 open my $in, '<', $generator or die $!;
 my $script = do { local $/; <$in> };
-$script =~ s/use IServ::Conf;/our \$conf = { DHCP => ['br1118'] };/;
+$script =~ s/use IServ::Conf;/our \$conf = { DHCPv6 => ['br1118'] };/;
 open my $helper, '>', "$bin/iserv-ipv6-prefix" or die $!;
 print {$helper} <<'SH';
 #!/bin/sh

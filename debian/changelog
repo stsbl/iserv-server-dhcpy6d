@@ -1,5 +1,7 @@
 stsbl-iserv-server-dhcpy6d (26.10.28.1) UNRELEASED; urgency=medium
 
+  * Configure DHCPv6 independently and migrate the legacy DHCP interface
+    selection once on package upgrades; skip migration on fresh installs.
   * Apply interface and host-derived DHCPv6 configuration through IPv6 hooks.
 
  -- Stadtteilschule Blankenese <repository@stsbl.de>  Wed, 28 Oct 2026 12:00:00 +0100

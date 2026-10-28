@@ -1,0 +1,6 @@
+---
+text: "Der DHCPv6-Server lässt sich unabhängig vom IPv4-DHCP-Server konfigurieren. Bei Paketaktualisierungen wird die bisherige Schnittstellenauswahl einmalig übernommen."
+audience: admins
+type: changed
+urgency: medium
+highlight: false
