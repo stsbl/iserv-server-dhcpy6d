@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+. /usr/lib/iserv/ipv6chdetectd-functions
+[ "$IPV6CHDETECTD_PHASE" = configure ] || exit 0
+
+. /usr/lib/iserv/cfg
+if ! iservpkginstalled iserv-portal || { [ "${#DHCP}" -gt 0 ] && ipv6_has_addresses; }; then
+  ipv6_config dhcpy6d.service restart /etc/default/dhcpy6d /etc/dhcpy6d.conf
+  ipv6_watch dhcpy6d.service restart /var/lib/iserv/ipv6-support/dhcpy6d/clients.conf /var/lib/dhcpy6d/environment-prefix
+  ipv6_state dhcpy6d.service start
+else
+  ipv6_remove dhcpy6d.service restart /etc/dhcpy6d.conf
+  ipv6_state dhcpy6d.service stop
+fi
+
+ipv6_requires dhcpy6d.service 50ipv6-support-hosts 30ipv6-support-lan

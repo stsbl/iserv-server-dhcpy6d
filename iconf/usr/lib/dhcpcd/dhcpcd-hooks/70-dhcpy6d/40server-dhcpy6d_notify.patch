@@ -1,0 +1,74 @@
+--- /usr/lib/dhcpcd/dhcpcd-hooks/70-dhcpy6d
++++ /usr/lib/dhcpcd/dhcpcd-hooks/70-dhcpy6d
+@@ -14,13 +14,13 @@
+     value="$1"
+     tmp="$(mktemp)"
+     if [ -n "${value}" ]; then
+-        printf 'PREFIX_OPT=--prefix\nPREFIX_VAL=%s\n' "${value}" > "${tmp}"
++        printf 'PREFIX_OPT=--prefix\nPREFIX_VAL=%s\nPREFIX_SOURCE=%s\n' "${value}" "${interface:-}" > "${tmp}"
+     else
+         printf 'PREFIX_OPT=\nPREFIX_VAL=\n' > "${tmp}"
+     fi
+     if ! cmp -s "${tmp}" "${ENV_FILE}" 2>/dev/null; then
+         install -m 0644 -o root -g root "${tmp}" "${ENV_FILE}"
+-        systemctl -q try-restart dhcpy6d || :
++        ipv6chdetectd --notify || :
+     fi
+     rm -f "${tmp}"
+ }
+@@ -53,8 +53,25 @@
+ PY
+ }
+ 
++# The environment is global to dhcpy6d. Only its upstream owner may withdraw
++# a live prefix; downstream carrier loss must not disrupt the other LANs.
++prefix_source="$(sed -n 's/^PREFIX_SOURCE=//p' "${ENV_FILE}" 2>/dev/null || :)"
++if [ -z "${prefix_source}" ] && [ -r /etc/dhcpcd.conf ]; then
++    # Upgrade from the shipped two-field environment file: the configured
++    # IA_PD stanza identifies the owner even before the first lease renewal.
++    prefix_source="$(awk '
++        $1 == "interface" { device = $2; gsub(/^"|"$/, "", device) }
++        $1 == "ia_pd" { print device; exit }
++    ' /etc/dhcpcd.conf)"
++fi
++clear_owned_prefix() {
++    if [ -n "${prefix_source}" ] && [ "${prefix_source}" = "${interface:-}" ]; then
++        write_prefix_arg ''
++    fi
++}
++
+ case "${reason:-}" in
+-    BOUND6|RENEW6|REBIND6)
++    BOUND6|RENEW6|REBIND6|REBOOT6)
+         if [ "${enabled}" != "yes" ]; then
+             write_prefix_arg ''
+         else
+@@ -62,14 +79,24 @@
+             bits="${new_dhcp6_ia_pd1_prefix1_length:-}"
+ 
+             if [ -z "${prefix}" ] || [ -z "${bits}" ]; then
+-                write_prefix_arg ''
++                clear_owned_prefix
+             elif ! result="$(derive_prefix_stem "${prefix}" "${bits}")"; then
+-                write_prefix_arg ''
++                clear_owned_prefix
+             elif [ -n "${result}" ]; then
+                 write_prefix_arg "${result}"
+             else
+-                write_prefix_arg ''
++                clear_owned_prefix
+             fi
++        fi
++        ;;
++    EXPIRE6|RELEASE6|STOP6|NOCARRIER)
++        clear_owned_prefix
++        ;;
++    STOPPED)
++        if [ -z "${interface:-}" ]; then
++            write_prefix_arg ''
++        else
++            clear_owned_prefix
+         fi
+         ;;
+ esac
+
