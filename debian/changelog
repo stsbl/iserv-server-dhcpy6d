@@ -1,3 +1,11 @@
+stsbl-iserv-server-dhcpy6d (26.10.28.1) UNRELEASED; urgency=medium
+
+  * Add opt-in authenticated client renewal after prefix changes and startup.
+  * Require dhcpy6d NMU5 with persistent Reconfigure authentication state.
+  * Include a test procedure for prefix recovery and client enrollment.
+
+ -- Felix Jacobi <Felix@jacobi-hamburg.net>  Wed, 28 Oct 2026 23:50:00 +0100
+
 stsbl-iserv-server-dhcpy6d (26.08.26.2) stable; urgency=medium
 
   * Fixed Depends on dhcpy6d

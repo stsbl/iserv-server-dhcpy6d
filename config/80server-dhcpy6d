@@ -1,0 +1,7 @@
+DHCPv6Reconfigure:
+name            Request immediate DHCPv6 renewal after prefix changes
+description     Send authenticated Reconfigure messages to enrolled clients after daemon startup or delegated prefix updates. Clients must accept Reconfigure and complete a new initial exchange after enabling this option.
+type            bool
+default         false
+group           Module: DHCPv6 server
+
