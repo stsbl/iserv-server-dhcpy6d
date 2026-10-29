@@ -1,10 +1,10 @@
-stsbl-iserv-server-dhcpy6d (26.10.29.3) UNRELEASED; urgency=medium
+stsbl-iserv-server-dhcpy6d (26.10.29.3) stable; urgency=medium
 
   * Configure DHCPv6 interfaces independently of the IPv4 DHCP server.
   * Import the legacy DHCP selection once on upgrades; mark fresh installs
     complete without importing and preserve explicit DHCPv6 configuration.
 
- -- Felix Jacobi <felix.jacobi@iserv.eu>  Thu, 29 Oct 2026 01:24:09 +0100
+ -- Felix Jacobi <Felix@jacobi-hamburg.net>  Thu, 29 Oct 2026 01:30:24 +0100
 
 stsbl-iserv-server-dhcpy6d (26.10.29.2) stable; urgency=medium
 
