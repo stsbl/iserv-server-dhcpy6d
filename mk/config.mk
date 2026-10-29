@@ -10,4 +10,4 @@ TEST_TARGETS += ipv6_config_tests
 
 .PHONY: ipv6_config_tests
 ipv6_config_tests:
-	prove -r tests
+	prove -lr tests

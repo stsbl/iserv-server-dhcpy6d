@@ -1,0 +1,44 @@
+# TRANSLATION CATALOG OF STSBL-ISERV-SERVER-DHCPY6D.
+# Copyright (C) 2026 IServ GmbH
+# This file is distributed under the same license as the stsbl-iserv-server-dhcpy6d package.
+# IServ GmbH <info@iserv.eu>, 2026.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: stsbl-iserv-server-dhcpy6d\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: config/10server-dhcpy6d
+msgid ""
+"Determines on which network interfaces IServ acts as a DHCPv6 server, "
+"independently of the IPv4 DHCP server.\\n\\nall IPv6 LANs (default): "
+"*\\nspecific interfaces: eth0 eth1\\ndisable DHCPv6: empty\\n\\nIf you want "
+"to specify multiple interfaces, enter one interface per line."
+msgstr ""
+
+#: config/10server-dhcpy6d
+msgid "Enable DHCPv6 server"
+msgstr ""
+
+#: config/80server-dhcpy6d
+msgid "Module: DHCPv6 server"
+msgstr ""
+
+#: config/10server-dhcpy6d
+msgid "Network"
+msgstr ""
+
+#: config/80server-dhcpy6d
+msgid "Request immediate DHCPv6 renewal after prefix changes"
+msgstr ""
+
+#: config/80server-dhcpy6d
+msgid ""
+"Send authenticated Reconfigure messages to enrolled clients after daemon "
+"startup or delegated prefix updates. Clients must accept Reconfigure and "
+"complete a new initial exchange after enabling this option."
+msgstr ""

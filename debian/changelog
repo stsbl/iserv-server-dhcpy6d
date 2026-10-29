@@ -1,10 +1,32 @@
-stsbl-iserv-server-dhcpy6d (26.10.28.1) UNRELEASED; urgency=medium
+stsbl-iserv-server-dhcpy6d (26.10.29.3) UNRELEASED; urgency=medium
 
-  * Configure DHCPv6 independently and migrate the legacy DHCP interface
-    selection once on package upgrades; skip migration on fresh installs.
   * Apply interface and host-derived DHCPv6 configuration through IPv6 hooks.
+  * Configure DHCPv6 interfaces independently of the IPv4 DHCP server.
+  * Import the legacy DHCP selection once on upgrades; mark fresh installs
+    complete without importing and preserve explicit DHCPv6 configuration.
 
- -- Stadtteilschule Blankenese <repository@stsbl.de>  Wed, 28 Oct 2026 12:00:00 +0100
+ -- Felix Jacobi <felix.jacobi@iserv.eu>  Thu, 29 Oct 2026 01:24:09 +0100
+
+stsbl-iserv-server-dhcpy6d (26.10.29.2) stable; urgency=medium
+
+  * Updated translations
+
+ -- Felix Jacobi <Felix@jacobi-hamburg.net>  Thu, 29 Oct 2026 01:20:06 +0100
+
+stsbl-iserv-server-dhcpy6d (26.10.29.1) stable; urgency=medium
+
+  * Enable authenticated client renewal by default after prefix changes and startup.
+  * Require dhcpy6d NMU5 with persistent Reconfigure authentication state.
+  * Include a test procedure for prefix recovery and client enrollment.
+
+ -- Felix Jacobi <Felix@jacobi-hamburg.net>  Thu, 29 Oct 2026 00:24:01 +0100
+
+stsbl-iserv-server-dhcpy6d (26.08.27.1) stable; urgency=medium
+
+  * Fix DHCPv6 route hook failures
+  * Delete changelogs/unreleased/fix-route-hooks.yml
+
+ -- Felix Jacobi <Felix@jacobi-hamburg.net>  Thu, 27 Aug 2026 18:20:18 +0200
 
 stsbl-iserv-server-dhcpy6d (26.08.26.2) stable; urgency=medium
 

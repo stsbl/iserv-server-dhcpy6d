@@ -1,2 +1,4 @@
 LICENSE* usr/share/doc/stsbl-iserv-server-dhcpy6d
 X:tests
+
+doc/*.md usr/share/doc/stsbl-iserv-server-dhcpy6d
