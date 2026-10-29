@@ -2,7 +2,7 @@
 
 . /usr/lib/iserv/cfg
 
-if ! dpkg-query -Wf '${Status}' iserv-portal 2>/dev/null | grep -qE '^(install|hold) ok (unpacked|installed)$' || { [[ ${#DHCP} -gt 0 ]] && netquery6 -gulq; }
+if [[ ${#DHCPv6[@]} -gt 0 ]] && netquery6 -gulq
 then
 cat <<EOT
 # See https://github.com/HenriWahl/dhcpy6d/issues/49

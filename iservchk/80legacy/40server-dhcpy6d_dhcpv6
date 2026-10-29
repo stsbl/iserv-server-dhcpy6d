@@ -1,0 +1,29 @@
+Test "server-dhcpy6d: import DHCP interface selection into DHCPv6"
+  grep -qx 40server-dhcpy6d_dhcpv6 /var/lib/iserv/config/update.log && exit 0
+  if ! [ -f /var/lib/iserv/server-dhcpy6d/package_upgrade.flag ]
+  then
+    echo 40server-dhcpy6d_dhcpv6 >> /var/lib/iserv/config/update.log
+    exit 0
+  fi
+  exit 1
+  ---
+  set -e
+  . /usr/lib/iserv/cfg
+  # Preserve a DHCPv6 value explicitly configured by the administrator.
+  if ! grep -qE '^[[:space:]]*DHCPv6[[:space:]]*=' /etc/iserv/config
+  then
+    if declare -p DHCP >/dev/null 2>&1
+    then
+      store_cfg -a /etc/iserv/config DHCPv6 "${DHCP[@]}"
+    else
+      store_cfg -a /etc/iserv/config DHCPv6 '*'
+    fi
+  fi
+  # Also regenerate on retry if a previous write succeeded but newconf failed.
+  /usr/lib/iserv/newconf
+  echo 40server-dhcpy6d_dhcpv6 >> /var/lib/iserv/config/update.log
+  if [ -n "${ISERVCHK_TOP_PID:-}" ]
+  then
+    kill -USR1 "$ISERVCHK_TOP_PID"
+  fi
+

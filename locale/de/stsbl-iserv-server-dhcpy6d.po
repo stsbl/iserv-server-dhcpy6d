@@ -5,9 +5,25 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 
+#: config/10server-dhcpy6d
+msgid ""
+"Determines on which network interfaces IServ acts as a DHCPv6 server, "
+"independently of the IPv4 DHCP server.\\n\\nall IPv6 LANs (default): "
+"*\\nspecific interfaces: eth0 eth1\\ndisable DHCPv6: empty\\n\\nIf you want "
+"to specify multiple interfaces, enter one interface per line."
+msgstr "Legt fest, auf welchen Netzwerkschnittstellen IServ als DHCPv6-Server arbeitet, unabhängig vom IPv4-DHCP-Server.\\n\\nAlle IPv6-LANs (Standard): *\\nBestimmte Schnittstellen: eth0 eth1\\nDHCPv6 deaktivieren: leer lassen\\n\\nWenn Sie mehrere Schnittstellen angeben möchten, tragen Sie eine Schnittstelle pro Zeile ein."
+
+#: config/10server-dhcpy6d
+msgid "Enable DHCPv6 server"
+msgstr "DHCPv6-Server aktivieren"
+
 #: config/80server-dhcpy6d
 msgid "Module: DHCPv6 server"
 msgstr "Modul: DHCPv6-Server"
+
+#: config/10server-dhcpy6d
+msgid "Network"
+msgstr "Netzwerk"
 
 #: config/80server-dhcpy6d
 msgid "Request immediate DHCPv6 renewal after prefix changes"
@@ -20,6 +36,6 @@ msgid ""
 "complete a new initial exchange after enabling this option."
 msgstr ""
 "Nach dem Start des Dienstes oder der Aktualisierung delegierter Präfixe "
-"authentifizierte Reconfigure-Nachrichten an registrierte Clients senden. "
-"Die Clients müssen Reconfigure unterstützen und nach dem Aktivieren dieser "
+"authentifizierte Reconfigure-Nachrichten an registrierte Clients senden. Die "
+"Clients müssen Reconfigure unterstützen und nach dem Aktivieren dieser "
 "Option eine neue initiale DHCPv6-Aushandlung abschließen."

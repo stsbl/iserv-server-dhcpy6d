@@ -1,0 +1,10 @@
+#!/bin/sh
+set -e
+
+if [ "$1" = configure ] && [ -n "${2:-}" ]; then
+    # Let the legacy check distinguish upgrades from a fresh installation.
+    install -d -m 0755 /var/lib/iserv/server-dhcpy6d
+    touch /var/lib/iserv/server-dhcpy6d/package_upgrade.flag
+fi
+
+#DEBHELPER#
