@@ -1,0 +1,7 @@
+DHCPv6:
+name            Enable DHCPv6 server
+description     Determines on which network interfaces IServ acts as a DHCPv6 server, independently of the IPv4 DHCP server.\n\nall IPv6 LANs (default): *\nspecific interfaces: eth0 eth1\ndisable DHCPv6: empty\n\nIf you want to specify multiple interfaces, enter one interface per line.
+group           Network
+type            array
+default         (*)
+
